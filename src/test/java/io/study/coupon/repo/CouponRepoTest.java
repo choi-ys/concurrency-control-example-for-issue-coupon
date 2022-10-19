@@ -1,45 +1,24 @@
 package io.study.coupon.repo;
 
+import static io.study.utils.generator.fixture.CouponFixtureGenerator.수량이_100개인_쿠폰_생성;
+import static io.study.utils.generator.fixture.CouponFixtureGenerator.수량이_1개인_쿠폰_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import io.study.config.AbstractDataJpaTestBase;
 import io.study.coupon.entity.Coupon;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.TestConstructor;
-import org.springframework.test.context.TestConstructor.AutowireMode;
 
-@DataJpaTest
 @DisplayName("Repo:Coupon")
-@TestConstructor(autowireMode = AutowireMode.ALL)
-class CouponRepoTest {
-    public static final String NAME = "천원 할인 쿠폰";
-    public static final int HUNDRED = 100;
-    public static final int ONE = 1;
-
-    public static Coupon 수량이_1개인_쿠폰_생성() {
-        return Coupon.of(NAME, ONE);
-    }
-
-    public static Coupon 수량이_100개인_쿠폰_생성() {
-        return Coupon.of(NAME, HUNDRED);
-    }
-
+class CouponRepoTest extends AbstractDataJpaTestBase {
     private final CouponRepo couponRepo;
-    private final EntityManager entityManager;
 
-    public CouponRepoTest(
-        CouponRepo couponRepo,
-        EntityManager entityManager
-    ) {
+    public CouponRepoTest(CouponRepo couponRepo) {
         this.couponRepo = couponRepo;
-        this.entityManager = entityManager;
     }
 
     @Test
@@ -99,21 +78,5 @@ class CouponRepoTest {
             Arguments.of("잔여 수량이 1개인 쿠폰 발급", 수량이_1개인_쿠폰_생성(), 0, false),
             Arguments.of("잔여 수량이 100개인 쿠폰 발급", 수량이_100개인_쿠폰_생성(), 99, true)
         );
-    }
-
-    private <T> T executeWithPersistContextClear(Supplier<T> supplier) {
-        try {
-            return supplier.get();
-        } finally {
-            entityManager.clear();
-        }
-    }
-
-    private void executeWithFlush(Runnable runnable) {
-        try {
-            runnable.run();
-        } finally {
-            entityManager.flush();
-        }
     }
 }

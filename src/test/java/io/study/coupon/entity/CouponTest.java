@@ -1,7 +1,9 @@
 package io.study.coupon.entity;
 
+import static io.study.utils.generator.fixture.CouponFixtureGenerator.NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.hibernate.type.IntegerType.ZERO;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,12 +16,11 @@ class CouponTest {
     @DisplayName("[예외]수량이 0보다 적은 쿠폰 생성")
     public void throwException_WhenLessThanZeroQuantity() {
         // Given
-        final String name = "쿠폰";
         final int quantity = Integer.MIN_VALUE;
 
         // When & Then
         assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> Coupon.of(name, quantity));
+            .isThrownBy(() -> Coupon.of(NAME, quantity));
     }
 
     @ParameterizedTest(name = "Case[#{index}]수량 : {0} -> {1}, 발급 가능 여부 : {2}")
@@ -31,8 +32,7 @@ class CouponTest {
         final boolean issuable
     ) {
         // Given
-        final String name = "쿠폰";
-        final Coupon given = Coupon.of(name, quantity);
+        final Coupon given = Coupon.of(NAME, quantity);
 
         // When
         given.issue();
@@ -46,9 +46,7 @@ class CouponTest {
     @DisplayName("[예외]수량이 모두 소진된 쿠폰 발급")
     public void throwException_WhenExhaustedQuantity() {
         // Given
-        final String name = "쿠폰";
-        final int quantity = 0;
-        final Coupon given = Coupon.of(name, quantity);
+        final Coupon given = Coupon.of(NAME, ZERO);
 
         // When & Then
         assertThatExceptionOfType(IllegalStateException.class)
