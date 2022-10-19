@@ -1,0 +1,73 @@
+package io.study.coupon.entity;
+
+import static org.hibernate.type.IntegerType.ZERO;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class Coupon {
+    public static final String LESS_THAN_ZERO_ERROR_MESSAGE = "수량은 0보다 작을 수 없습니다.";
+    public static final String EXHAUSTED_QUANTITY_ERROR_MESSAGE = "수량이 모두 소진되었습니다.";
+
+    private String name;
+    private int quantity;
+    private boolean issuable;
+
+    public Coupon(String name, int quantity) {
+        validateQuantity(quantity);
+        this.name = name;
+        this.quantity = quantity;
+        this.issuable = isPositiveQuantity();
+    }
+
+    private void validateQuantity(int quantity) {
+        if (isLessThanZero(quantity)) {
+            throw new IllegalArgumentException(LESS_THAN_ZERO_ERROR_MESSAGE);
+        }
+    }
+
+    private boolean isLessThanZero(int quantity) {
+        return quantity < ZERO;
+    }
+
+    private boolean isPositiveQuantity() {
+        return quantity > ZERO;
+    }
+
+    public static Coupon of(String name, int quantity) {
+        return new Coupon(name, quantity);
+    }
+
+    public void issue() {
+        validateIssuable();
+        quantity -= 1;
+        checkIsExhausted();
+    }
+
+    private void validateIssuable() {
+        if (isNotIssuable()) {
+            throw new IllegalStateException(EXHAUSTED_QUANTITY_ERROR_MESSAGE);
+        }
+    }
+
+    private boolean isNotIssuable() {
+        return !issuable;
+    }
+
+    private void checkIsExhausted() {
+        if (isZeroQuantity()) {
+            changeUnissueable();
+        }
+    }
+
+    private boolean isZeroQuantity() {
+        return quantity == ZERO;
+    }
+
+    private void changeUnissueable() {
+        issuable = false;
+    }
+}
