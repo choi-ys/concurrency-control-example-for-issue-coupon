@@ -2,16 +2,25 @@ package io.study.coupon.entity;
 
 import static org.hibernate.type.IntegerType.ZERO;
 
+import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Coupon {
     public static final String LESS_THAN_ZERO_ERROR_MESSAGE = "수량은 0보다 작을 수 없습니다.";
     public static final String EXHAUSTED_QUANTITY_ERROR_MESSAGE = "수량이 모두 소진되었습니다.";
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private int quantity;
     private boolean issuable;
@@ -69,5 +78,22 @@ public class Coupon {
 
     private void changeUnissueable() {
         issuable = false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Coupon coupon = (Coupon) o;
+        return Objects.equals(id, coupon.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
