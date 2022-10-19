@@ -2,6 +2,8 @@ package io.study.coupon.entity;
 
 import static org.hibernate.type.IntegerType.ZERO;
 
+import io.study.coupon.event.ExhaustCouponEvent;
+import io.study.coupon.event.IssuedCouponEvent;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +12,12 @@ import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Coupon {
+public class Coupon extends AbstractAggregateRoot<Coupon> {
     public static final String LESS_THAN_ZERO_ERROR_MESSAGE = "수량은 0보다 작을 수 없습니다.";
     public static final String EXHAUSTED_QUANTITY_ERROR_MESSAGE = "수량이 모두 소진되었습니다.";
 
@@ -53,6 +56,7 @@ public class Coupon {
     public void issue() {
         validateIssuable();
         quantity -= 1;
+        registerEvent(IssuedCouponEvent.of(this));
         checkIsExhausted();
     }
 
@@ -69,6 +73,7 @@ public class Coupon {
     private void checkIsExhausted() {
         if (isZeroQuantity()) {
             changeUnissueable();
+            registerEvent(ExhaustCouponEvent.of(this));
         }
     }
 
