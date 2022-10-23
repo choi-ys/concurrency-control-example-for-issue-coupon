@@ -1,31 +1,45 @@
 package io.study.coupon.event;
 
+import io.study.coupon.repo.ExhaustedCouponEventRepo;
+import io.study.coupon.repo.IssuedCouponEventRepo;
+import java.time.format.DateTimeFormatter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class CouponEventListener {
+    private final IssuedCouponEventRepo issuedCouponEventRepo;
+    private final ExhaustedCouponEventRepo exhaustedCouponEventRepo;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SS");
+
     @Async
-    @TransactionalEventListener
+    @EventListener
     public void onIssuedEventHandler(IssuedCouponEvent issuedCouponEvent) {
-        log.info("[time : {}][id : {}][name : {}, quantity : {}] 쿠폰이 발급되었습니다.",
-            issuedCouponEvent.getEventTime(),
+        issuedCouponEventRepo.save(issuedCouponEvent);
+        log.info("[time : {}][eventId : {}][couponId : {}][잔여 수량 : quantity : {}] : {}",
+            issuedCouponEvent.getEventTime().format(formatter),
             issuedCouponEvent.getId(),
-            issuedCouponEvent.getName(),
-            issuedCouponEvent.getQuantity()
+            issuedCouponEvent.getCouponId(),
+            issuedCouponEvent.getQuantity(),
+            issuedCouponEvent.getMessage()
         );
     }
 
     @Async
     @TransactionalEventListener
     public void onExhaustEventHandler(ExhaustCouponEvent exhaustCouponEvent) {
-        log.info("[time : {}][id : {}][name : {}] 쿠폰이 소진되었습니다.",
-            exhaustCouponEvent.getEventTime(),
+        exhaustedCouponEventRepo.save(exhaustCouponEvent);
+        log.info("[time : {}][eventId : {}][couponId : {}] : {}",
+            exhaustCouponEvent.getEventTime().format(formatter),
             exhaustCouponEvent.getId(),
-            exhaustCouponEvent.getName()
+            exhaustCouponEvent.getCouponId(),
+            exhaustCouponEvent.getMessage()
         );
     }
 }

@@ -1,5 +1,7 @@
 package io.study.utils.generator.fixture;
 
+import static org.hibernate.type.IntegerType.ZERO;
+
 import io.study.coupon.entity.Coupon;
 import io.study.coupon.repo.CouponRepo;
 import org.springframework.boot.test.context.TestComponent;
@@ -19,6 +21,10 @@ public class CouponFixtureGenerator {
         this.couponRepo = couponRepo;
     }
 
+    public static Coupon 수량이_0개인_쿠폰_생성() {
+        return Coupon.of(NAME, ZERO);
+    }
+
     public static Coupon 수량이_1개인_쿠폰_생성() {
         return Coupon.of(NAME, ONE);
     }
@@ -27,7 +33,19 @@ public class CouponFixtureGenerator {
         return Coupon.of(NAME, HUNDRED);
     }
 
+    public Coupon 수량이_0개인_쿠폰_저장() {
+        return 쿠폰_저장(수량이_0개인_쿠폰_생성());
+    }
+
     public Coupon 수량이_1개인_쿠폰_저장() {
-        return couponRepo.saveAndFlush(수량이_1개인_쿠폰_생성());
+        return 쿠폰_저장(수량이_1개인_쿠폰_생성());
+    }
+
+    public Coupon 수량이_100개인_쿠폰_저장() {
+        return 쿠폰_저장(수량이_100개인_쿠폰_생성());
+    }
+
+    public Coupon 쿠폰_저장(Coupon coupon) {
+        return couponRepo.saveAndFlush(coupon);
     }
 }

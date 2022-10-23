@@ -1,21 +1,34 @@
 package io.study.coupon.event;
 
 import io.study.coupon.entity.Coupon;
+import io.study.coupon.event.common.DomainEvent;
 import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ExhaustCouponEvent {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class ExhaustCouponEvent extends DomainEvent {
+    private static final String EXHAUSTED_MESSAGE_FORMAT = "[%S]이 모두 소진되었습니다.";
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long couponId;
     private String name;
+    private String message;
     private LocalDateTime eventTime = LocalDateTime.now();
 
-    private ExhaustCouponEvent(Long id, String name) {
-        this.id = id;
+    private ExhaustCouponEvent(Long couponId, String name) {
+        this.couponId = couponId;
         this.name = name;
+        this.message = String.format(EXHAUSTED_MESSAGE_FORMAT, name);
     }
 
     public static ExhaustCouponEvent of(Coupon exhaustedCoupon) {

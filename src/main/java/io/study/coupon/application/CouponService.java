@@ -17,7 +17,6 @@ public class CouponService {
     public void issueCoupon(Long id) {
         Coupon queriedCoupon = findById(id);
         queriedCoupon.issue();
-        couponRepo.save(queriedCoupon);
     }
 
     private Coupon findById(Long id) {
