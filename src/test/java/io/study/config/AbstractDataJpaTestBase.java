@@ -3,8 +3,8 @@ package io.study.config;
 import com.github.gavlyukovskiy.boot.jdbc.decorator.DataSourceDecoratorAutoConfiguration;
 import io.study.global.config.p6spy.P6spyLogMessageFormatConfiguration;
 import java.util.function.Supplier;
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
@@ -16,7 +16,7 @@ import org.springframework.test.context.TestConstructor.AutowireMode;
 @Import(P6spyLogMessageFormatConfiguration.class)
 @TestConstructor(autowireMode = AutowireMode.ALL)
 public abstract class AbstractDataJpaTestBase {
-    @Autowired
+    @Resource
     protected EntityManager entityManager;
 
     protected <T> T executeWithPersistContextClear(Supplier<T> supplier) {

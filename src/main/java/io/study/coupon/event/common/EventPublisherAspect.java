@@ -17,7 +17,6 @@ public class EventPublisherAspect {
         this.eventPublisher = eventPublisher;
     }
 
-    // AnnotationMatchingPointcut : @Trasactional이 적용된 method 에 handleEvent() advice를 적용
     @Around("@annotation(org.springframework.transaction.annotation.Transactional)")
     public Object handleEvent(ProceedingJoinPoint joinPoint) throws Throwable {
         DomainEventPublisher.setPublisher(eventPublisher);

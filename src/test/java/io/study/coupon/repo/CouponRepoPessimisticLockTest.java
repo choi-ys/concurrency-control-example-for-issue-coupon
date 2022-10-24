@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-@DataJpaTest(showSql = true)
+@DataJpaTest
 @DisplayName("Repo:Coupon:Pessimistic Lock")
 public class CouponRepoPessimisticLockTest extends AbstractDataJpaTestBase {
     private static final String PESSIMISTIC_LOCK_QUERY_KEYWORD = "for update";
@@ -22,7 +22,7 @@ public class CouponRepoPessimisticLockTest extends AbstractDataJpaTestBase {
     }
 
     @Test
-    @DisplayName("JPA가 제공하는 PessimisticLock의 수행 쿼리 검증")
+    @DisplayName("JPA가 제공하는 PessimisticLock의 실행 쿼리 검증")
     public void concurrentControlByJpaPessimisticLock() {
         // Given
         final Coupon 저장된_수량이_100개인_쿠폰 = executeWithPersistContextClear(

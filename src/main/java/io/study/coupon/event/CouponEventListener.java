@@ -2,7 +2,6 @@ package io.study.coupon.event;
 
 import io.study.coupon.repo.ExhaustedCouponEventRepo;
 import io.study.coupon.repo.IssuedCouponEventRepo;
-import java.time.format.DateTimeFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -16,7 +15,6 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class CouponEventListener {
     private final IssuedCouponEventRepo issuedCouponEventRepo;
     private final ExhaustedCouponEventRepo exhaustedCouponEventRepo;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 
     @Async
     @EventListener
