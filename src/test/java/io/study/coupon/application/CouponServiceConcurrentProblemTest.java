@@ -25,7 +25,7 @@ import org.springframework.test.context.TestConstructor.AutowireMode;
 @Import({CouponFixtureGenerator.class, TearIsolationUtils.class})
 @TestConstructor(autowireMode = AutowireMode.ALL)
 @DisplayName("Service:Coupon")
-public class ConcurrentProblemTest {
+public class CouponServiceConcurrentProblemTest {
     private static final int HUNDRED = 100;
     private final CouponService couponService;
     private final CouponFixtureGenerator couponFixtureGenerator;
@@ -33,7 +33,7 @@ public class ConcurrentProblemTest {
     private final IssuedCouponEventRepo issuedCouponEventRepo;
     private final TearIsolationUtils tearIsolationUtils;
 
-    public ConcurrentProblemTest(
+    public CouponServiceConcurrentProblemTest(
         CouponService couponService,
         CouponFixtureGenerator couponFixtureGenerator,
         ExhaustedCouponEventRepo exhaustedCouponEventRepo,
