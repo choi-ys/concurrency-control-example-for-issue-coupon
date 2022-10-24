@@ -16,30 +16,17 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class CouponEventListener {
     private final IssuedCouponEventRepo issuedCouponEventRepo;
     private final ExhaustedCouponEventRepo exhaustedCouponEventRepo;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SS");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 
     @Async
     @EventListener
     public void onIssuedEventHandler(IssuedCouponEvent issuedCouponEvent) {
         issuedCouponEventRepo.save(issuedCouponEvent);
-        log.info("[time : {}][eventId : {}][couponId : {}][잔여 수량 : quantity : {}] : {}",
-            issuedCouponEvent.getEventTime().format(formatter),
-            issuedCouponEvent.getId(),
-            issuedCouponEvent.getCouponId(),
-            issuedCouponEvent.getQuantity(),
-            issuedCouponEvent.getMessage()
-        );
     }
 
     @Async
     @TransactionalEventListener
     public void onExhaustEventHandler(ExhaustCouponEvent exhaustCouponEvent) {
         exhaustedCouponEventRepo.save(exhaustCouponEvent);
-        log.info("[time : {}][eventId : {}][couponId : {}] : {}",
-            exhaustCouponEvent.getEventTime().format(formatter),
-            exhaustCouponEvent.getId(),
-            exhaustCouponEvent.getCouponId(),
-            exhaustCouponEvent.getMessage()
-        );
     }
 }
