@@ -3,53 +3,17 @@ package io.study.coupon.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import io.study.config.AbstractSpringBootThreadTestBase;
 import io.study.coupon.entity.Coupon;
-import io.study.coupon.repo.ExhaustedCouponEventRepo;
-import io.study.coupon.repo.IssuedCouponEventRepo;
-import io.study.utils.TearIsolationUtils;
-import io.study.utils.generator.fixture.CouponFixtureGenerator;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestConstructor;
-import org.springframework.test.context.TestConstructor.AutowireMode;
 
-@ActiveProfiles("test")
-@SpringBootTest
-@Import({CouponFixtureGenerator.class, TearIsolationUtils.class})
-@TestConstructor(autowireMode = AutowireMode.ALL)
-@DisplayName("Service:Coupon")
-public class CouponServiceConcurrentProblemTest {
-    private static final int HUNDRED = 100;
+@DisplayName("Service:Coupon:Case#1:ConcurrentProblem")
+public class CouponServiceConcurrentProblemTest extends AbstractSpringBootThreadTestBase {
     private final CouponService couponService;
-    private final CouponFixtureGenerator couponFixtureGenerator;
-    private final ExhaustedCouponEventRepo exhaustedCouponEventRepo;
-    private final IssuedCouponEventRepo issuedCouponEventRepo;
-    private final TearIsolationUtils tearIsolationUtils;
 
-    public CouponServiceConcurrentProblemTest(
-        CouponService couponService,
-        CouponFixtureGenerator couponFixtureGenerator,
-        ExhaustedCouponEventRepo exhaustedCouponEventRepo,
-        IssuedCouponEventRepo issuedCouponEventRepo,
-        TearIsolationUtils tearIsolationUtils
-    ) {
+    public CouponServiceConcurrentProblemTest(CouponService couponService) {
         this.couponService = couponService;
-        this.couponFixtureGenerator = couponFixtureGenerator;
-        this.exhaustedCouponEventRepo = exhaustedCouponEventRepo;
-        this.issuedCouponEventRepo = issuedCouponEventRepo;
-        this.tearIsolationUtils = tearIsolationUtils;
-    }
-
-    @BeforeEach
-    void setUp() {
-        tearIsolationUtils.tableClear();
     }
 
     @Test
@@ -59,17 +23,13 @@ public class CouponServiceConcurrentProblemTest {
         Coupon 수량이_1개인_쿠폰 = couponFixtureGenerator.수량이_1개인_쿠폰_저장();
 
         // When
-        동시에_100개의_쿠폰_발급_요청(수량이_1개인_쿠폰);
+        동시에_100개의_쿠폰_발급_요청(() -> couponService.issueCoupon(수량이_1개인_쿠폰.getId()));
 
         // Then
-        final int 쿠폰_소진_이벤트_수 = exhaustedCouponEventRepo.countByCouponId(수량이_1개인_쿠폰.getId());
-        final int 쿠폰_발급_성공_이벤트_수 = issuedCouponEventRepo.countByCouponIdAndIssued(수량이_1개인_쿠폰.getId(), true);
-        final int 쿠폰_발급_실패_이벤트_수 = issuedCouponEventRepo.countByCouponIdAndIssued(수량이_1개인_쿠폰.getId(), false);
-        final int 전체_쿠폰_발급_이벤트_수 = 쿠폰_발급_성공_이벤트_수 + 쿠폰_발급_실패_이벤트_수;
-
+        쿠폰_발급_시_발생한_이벤트_조회(수량이_1개인_쿠폰);
         assertAll(
             () -> assertThat(쿠폰_소진_이벤트_수).as("100번의 쿠폰 발급 요청을 처리 하는 과정에서 발생한 동시성 문제로 인해 쿠폰이 1회 이상 소진").isNotEqualTo(1),
-            () -> assertThat(쿠폰_발급_성공_이벤트_수).as("100번의 쿠폰 발급 요청을 치러히는 과정에서 발생한 동시성 문제로 인해 수량이 1개인 쿠폰이 1회 이상 발급").isNotEqualTo(1),
+            () -> assertThat(쿠폰_발급_성공_이벤트_수).as("100번의 쿠폰 발급 요청을 처리하는 과정에서 발생한 동시성 문제로 인해 수량이 1개인 쿠폰이 1회 이상 발급").isNotEqualTo(1),
             () -> assertThat(전체_쿠폰_발급_이벤트_수).as("전체 쿠폰 발급 이벤트 수").isEqualTo(HUNDRED)
         );
     }
@@ -81,7 +41,7 @@ public class CouponServiceConcurrentProblemTest {
         final Coupon 수량이_100개인_쿠폰 = couponFixtureGenerator.수량이_100개인_쿠폰_저장();
 
         // When
-        동시에_100개의_쿠폰_발급_요청(수량이_100개인_쿠폰);
+        동시에_100개의_쿠폰_발급_요청(() -> couponService.issueCoupon(수량이_100개인_쿠폰.getId()));
 
         // Then
         final int 쿠폰_소진_이벤트_수 = exhaustedCouponEventRepo.countByCouponId(수량이_100개인_쿠폰.getId());
@@ -94,21 +54,5 @@ public class CouponServiceConcurrentProblemTest {
             () -> assertThat(쿠폰_발급_성공_이벤트_수).as("100번의 쿠폰 발급 요청 모두 발급 성공").isEqualTo(HUNDRED),
             () -> assertThat(전체_쿠폰_발급_이벤트_수).as("전체 쿠폰 발급 이벤트 수").isEqualTo(HUNDRED)
         );
-    }
-
-    private void 동시에_100개의_쿠폰_발급_요청(Coupon coupon) throws InterruptedException {
-        ExecutorService executorService = Executors.newFixedThreadPool(HUNDRED);
-        CountDownLatch countDownLatch = new CountDownLatch(HUNDRED);
-
-        for (int i = 0; i < HUNDRED; i++) {
-            executorService.execute(() -> {
-                try {
-                    couponService.issueCoupon(coupon.getId());
-                } finally {
-                    countDownLatch.countDown();
-                }
-            });
-        }
-        countDownLatch.await();
     }
 }
