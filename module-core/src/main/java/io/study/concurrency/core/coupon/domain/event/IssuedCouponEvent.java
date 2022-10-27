@@ -1,8 +1,9 @@
 package io.study.concurrency.core.coupon.domain.event;
 
 import io.study.concurrency.core.coupon.domain.entity.Coupon;
+import io.study.concurrency.core.coupon.domain.event.common.CouponEventAttributes;
 import io.study.concurrency.core.coupon.domain.event.common.DomainEvent;
-import java.time.LocalDateTime;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,26 +23,25 @@ public class IssuedCouponEvent extends DomainEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long couponId;
-    private String name;
     private int quantity;
     private boolean issued;
-    private String message;
-    private LocalDateTime eventTime = LocalDateTime.now();
 
-    private IssuedCouponEvent(Long couponId, String name, int quantity, boolean issued, String message) {
+    @Embedded
+    private CouponEventAttributes couponEventAttributes;
+
+    private IssuedCouponEvent(Long couponId, int quantity, boolean issued, String name, String message) {
         this.couponId = couponId;
-        this.name = name;
         this.quantity = quantity;
         this.issued = issued;
-        this.message = message;
+        this.couponEventAttributes = CouponEventAttributes.of(name, message);
     }
 
     public static IssuedCouponEvent ofSuccess(Coupon issuedCoupon) {
         return new IssuedCouponEvent(
             issuedCoupon.getId(),
-            issuedCoupon.getName(),
             issuedCoupon.getQuantity(),
             true,
+            issuedCoupon.getName(),
             String.format(ISSUED_SUCCESS_MESSAGE_FORMAT, issuedCoupon.getName())
         );
     }
@@ -49,9 +49,9 @@ public class IssuedCouponEvent extends DomainEvent {
     public static IssuedCouponEvent ofFail(Coupon issuedCoupon, String message) {
         return new IssuedCouponEvent(
             issuedCoupon.getId(),
-            issuedCoupon.getName(),
             issuedCoupon.getQuantity(),
             false,
+            issuedCoupon.getName(),
             String.format(
                 ISSUED_FAIL_MESSAGE_FORMAT,
                 issuedCoupon.getName(),

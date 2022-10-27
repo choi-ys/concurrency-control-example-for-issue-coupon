@@ -1,8 +1,9 @@
 package io.study.concurrency.core.coupon.domain.event;
 
 import io.study.concurrency.core.coupon.domain.entity.Coupon;
+import io.study.concurrency.core.coupon.domain.event.common.CouponEventAttributes;
 import io.study.concurrency.core.coupon.domain.event.common.DomainEvent;
-import java.time.LocalDateTime;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,14 +22,16 @@ public class ExhaustCouponEvent extends DomainEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long couponId;
-    private String name;
-    private String message;
-    private LocalDateTime eventTime = LocalDateTime.now();
+
+    @Embedded
+    private CouponEventAttributes couponEventAttributes;
 
     private ExhaustCouponEvent(Long couponId, String name) {
         this.couponId = couponId;
-        this.name = name;
-        this.message = String.format(EXHAUSTED_MESSAGE_FORMAT, name);
+        this.couponEventAttributes = CouponEventAttributes.of(
+            name,
+            String.format(EXHAUSTED_MESSAGE_FORMAT, name)
+        );
     }
 
     public static ExhaustCouponEvent of(Coupon exhaustedCoupon) {
