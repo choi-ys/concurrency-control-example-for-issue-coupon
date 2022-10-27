@@ -1,15 +1,13 @@
 package io.study.concurrency.core.coupon.domain.entity;
 
 import static io.study.concurrency.core.coupon.domain.event.common.DomainEventPublisher.registerEvent;
-import static org.hibernate.type.IntegerType.ZERO;
 
 import io.study.concurrency.core.coupon.domain.event.ExhaustCouponEvent;
 import io.study.concurrency.core.coupon.domain.event.IssuedCouponEvent;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,36 +15,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Coupon {
-    public static final String LESS_THAN_ZERO_ERROR_MESSAGE = "수량은 0보다 작을 수 없습니다.";
+public class Coupon extends BaseEntity {
     public static final String EXHAUSTED_QUANTITY_ERROR_MESSAGE = "수량이 모두 소진되어 쿠폰을 발급할 수 없습니다.";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column
     private String name;
-    private int quantity;
-    private boolean issuable;
 
-    public Coupon(String name, int quantity) {
-        validateQuantity(quantity);
+    @Embedded
+    private Quantity quantity;
+
+    @Embedded
+    private Issuable issuable;
+
+    private Coupon(String name, int quantity) {
         this.name = name;
-        this.quantity = quantity;
-        this.issuable = isPositiveQuantity();
-    }
-
-    private void validateQuantity(int quantity) {
-        if (isLessThanZero(quantity)) {
-            throw new IllegalArgumentException(LESS_THAN_ZERO_ERROR_MESSAGE);
-        }
-    }
-
-    private boolean isLessThanZero(int quantity) {
-        return quantity < ZERO;
-    }
-
-    private boolean isPositiveQuantity() {
-        return quantity > ZERO;
+        this.quantity = Quantity.of(quantity);
+        this.issuable = Issuable.of(this.quantity.isPositiveQuantity());
     }
 
     public static Coupon of(String name, int quantity) {
@@ -55,35 +39,31 @@ public class Coupon {
 
     public void issue() {
         validateIssuable();
-        quantity -= 1;
+        quantity.deduct();
         registerEvent(IssuedCouponEvent.ofSuccess(this));
         checkIsExhausted();
     }
 
     private void validateIssuable() {
-        if (isNotIssuable()) {
+        if (issuable.isNotIssuable()) {
             registerEvent(IssuedCouponEvent.ofFail(this, EXHAUSTED_QUANTITY_ERROR_MESSAGE));
             throw new IllegalStateException(EXHAUSTED_QUANTITY_ERROR_MESSAGE);
         }
     }
 
-    private boolean isNotIssuable() {
-        return !issuable;
-    }
-
     private void checkIsExhausted() {
-        if (isZeroQuantity()) {
-            changeUnissueable();
+        if (quantity.isZeroQuantity()) {
+            issuable.changeUnissueable();
             registerEvent(ExhaustCouponEvent.of(this));
         }
     }
 
-    private boolean isZeroQuantity() {
-        return quantity == ZERO;
+    public int getQuantity() {
+        return quantity.getQuantity();
     }
 
-    private void changeUnissueable() {
-        issuable = false;
+    public boolean isIssuable() {
+        return issuable.isIssuable();
     }
 
     @Override
@@ -95,11 +75,11 @@ public class Coupon {
             return false;
         }
         Coupon coupon = (Coupon) o;
-        return Objects.equals(id, coupon.id);
+        return Objects.equals(getId(), coupon.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getId());
     }
 }
