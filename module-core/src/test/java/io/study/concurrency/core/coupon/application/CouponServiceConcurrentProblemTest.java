@@ -44,11 +44,7 @@ public class CouponServiceConcurrentProblemTest extends AbstractSpringBootThread
         동시에_100개의_쿠폰_발급_요청(() -> couponService.issueCoupon(수량이_100개인_쿠폰.getId()));
 
         // Then
-        final int 쿠폰_소진_이벤트_수 = exhaustedCouponEventRepo.countByCouponId(수량이_100개인_쿠폰.getId());
-        final int 쿠폰_발급_성공_이벤트_수 = issuedCouponEventRepo.countByCouponIdAndIssued(수량이_100개인_쿠폰.getId(), true);
-        final int 쿠폰_발급_실패_이벤트_수 = issuedCouponEventRepo.countByCouponIdAndIssued(수량이_100개인_쿠폰.getId(), false);
-        final int 전체_쿠폰_발급_이벤트_수 = 쿠폰_발급_성공_이벤트_수 + 쿠폰_발급_실패_이벤트_수;
-
+        쿠폰_발급_시_발생한_이벤트_조회(수량이_100개인_쿠폰);
         assertAll(
             () -> assertThat(쿠폰_소진_이벤트_수).as("100번의 쿠폰 발급 요청을 처리하는 과정에서 발생한 동시성 문제로 인해 쿠폰 소진 이벤트 미 발생").isZero(),
             () -> assertThat(쿠폰_발급_성공_이벤트_수).as("100번의 쿠폰 발급 요청 모두 발급 성공").isEqualTo(AbstractSpringBootThreadTestBase.TRY_COUNT),

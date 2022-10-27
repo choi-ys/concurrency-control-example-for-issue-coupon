@@ -1,10 +1,10 @@
-package io.study.coupon.repo;
+package io.study.concurrency.pessimistic.coupon.infrastructure;
 
-import static io.study.utils.generator.fixture.CouponFixtureGenerator.수량이_100개인_쿠폰_생성;
+import static io.study.concurrency.core.utils.fixture.CouponFixtureGenerator.수량이_100개인_쿠폰_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.study.config.AbstractDataJpaTestBase;
-import io.study.coupon.entity.Coupon;
+import io.study.concurrency.core.config.AbstractDataJpaTestBase;
+import io.study.concurrency.core.coupon.domain.entity.Coupon;
 import java.util.Optional;
 import nl.altindag.console.ConsoleCaptor;
 import org.junit.jupiter.api.DisplayName;
@@ -13,11 +13,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
 @DisplayName("Repo:Coupon:Pessimistic Lock")
-public class CouponRepoPessimisticLockTest extends AbstractDataJpaTestBase {
+public class CouponRepoWithPessimisticLockTest extends AbstractDataJpaTestBase {
     private static final String PESSIMISTIC_LOCK_QUERY_KEYWORD = "for update";
-    private final CouponRepo couponRepo;
 
-    public CouponRepoPessimisticLockTest(CouponRepo couponRepo) {
+    private final CouponRepoWithPessimisticLock couponRepo;
+
+    public CouponRepoWithPessimisticLockTest(CouponRepoWithPessimisticLock couponRepo) {
         this.couponRepo = couponRepo;
     }
 

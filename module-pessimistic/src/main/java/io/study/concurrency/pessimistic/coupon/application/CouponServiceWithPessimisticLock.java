@@ -1,7 +1,7 @@
-package io.study.coupon.application;
+package io.study.concurrency.pessimistic.coupon.application;
 
-import io.study.coupon.entity.Coupon;
-import io.study.coupon.repo.CouponRepo;
+import io.study.concurrency.core.coupon.domain.entity.Coupon;
+import io.study.concurrency.pessimistic.coupon.infrastructure.CouponRepoWithPessimisticLock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CouponServiceWithPessimisticLock {
     private static final int ONE_SECONDS = 5_000;
     private static final String COUPON_NOT_FOUND_ERROR_MESSAGE = "요청에 해당하는 쿠폰을 찾을 수 없습니다.";
-    private final CouponRepo couponRepo;
+    private final CouponRepoWithPessimisticLock couponRepo;
 
     @Transactional
     public void issueCoupon(Long id) {
