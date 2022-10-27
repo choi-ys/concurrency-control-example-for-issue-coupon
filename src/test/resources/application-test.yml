@@ -1,4 +1,0 @@
-spring:
-  config:
-    import:
-      - optional:classpath:/not-applied-p6spy-logger.yml

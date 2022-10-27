@@ -1,0 +1,6 @@
+spring:
+  config:
+    import:
+      - optional:classpath:/not-applied-p6spy-logger.yml
+      - optional:classpath:/datasource.yml
+      - optional:classpath:/hikari-pool-debugger.yml

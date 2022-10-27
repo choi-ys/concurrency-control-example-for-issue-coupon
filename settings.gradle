@@ -1,1 +1,3 @@
-rootProject.name = 'coupon'
+rootProject.name = 'concurreny'
+
+include 'module-core'
