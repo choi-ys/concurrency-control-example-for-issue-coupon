@@ -12,7 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.orm.jpa.JpaSystemException;
 
-@DisplayName("Service:Coupon:Case#2:PessimisticLock")
+@DisplayName("Service:Coupon:Case#2:Pessimistic Lock")
 class CouponServiceWithPessimisticLockTest extends AbstractSpringBootThreadTestBase {
     private final CouponServiceWithPessimisticLock couponService;
 
@@ -44,7 +44,7 @@ class CouponServiceWithPessimisticLockTest extends AbstractSpringBootThreadTestB
         동시에_100개의_쿠폰_발급_요청(() -> couponService.issueCoupon(수량이_1개인_쿠폰.getId()));
 
         // Then
-        쿠폰_발급_시_발생한_이벤트_조회(수량이_1개인_쿠폰);
+        쿠폰_발급_시_발생한_이벤트_조회(수량이_1개인_쿠폰.getId());
         동시에_수량이_1개인_쿠폰_발급시_발생한_동시성_문제_해결_검증();
     }
 
@@ -74,7 +74,7 @@ class CouponServiceWithPessimisticLockTest extends AbstractSpringBootThreadTestB
         동시에_100개의_쿠폰_발급_요청(() -> couponService.issueCoupon(수량이_100개인_쿠폰.getId()));
 
         // Then
-        쿠폰_발급_시_발생한_이벤트_조회(수량이_100개인_쿠폰);
+        쿠폰_발급_시_발생한_이벤트_조회(수량이_100개인_쿠폰.getId());
         동시에_수량이_100개인_쿠폰_발급시_발생한_동시성_문제_해결_검증(수량이_100개인_쿠폰);
     }
 

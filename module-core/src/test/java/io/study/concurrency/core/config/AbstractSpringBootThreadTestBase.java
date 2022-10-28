@@ -1,6 +1,5 @@
 package io.study.concurrency.core.config;
 
-import io.study.concurrency.core.coupon.domain.entity.Coupon;
 import io.study.concurrency.core.coupon.infrastructure.ExhaustedCouponEventRepo;
 import io.study.concurrency.core.coupon.infrastructure.IssuedCouponEventRepo;
 import io.study.concurrency.core.utils.TearIsolationUtils;
@@ -23,7 +22,7 @@ import org.springframework.test.context.TestConstructor.AutowireMode;
 public abstract class AbstractSpringBootThreadTestBase {
     public static final int THREAD_POOL_SIZE = 16;
     public static final int TRY_COUNT = 100;
-    public static final int ASYNC_EVENT_SUBSCRIBER_WAIT_MILLISECOND = 100;
+    public static final int ASYNC_EVENT_SUBSCRIBER_WAIT_MILLISECOND = 300;
     protected int 쿠폰_소진_이벤트_수, 쿠폰_발급_성공_이벤트_수, 쿠폰_발급_실패_이벤트_수, 전체_쿠폰_발급_이벤트_수;
 
     @Resource
@@ -60,10 +59,10 @@ public abstract class AbstractSpringBootThreadTestBase {
         Thread.sleep(ASYNC_EVENT_SUBSCRIBER_WAIT_MILLISECOND);
     }
 
-    protected void 쿠폰_발급_시_발생한_이벤트_조회(Coupon coupon) {
-        쿠폰_소진_이벤트_수 = exhaustedCouponEventRepo.countByCouponId(coupon.getId());
-        쿠폰_발급_성공_이벤트_수 = issuedCouponEventRepo.countByCouponIdAndIssued(coupon.getId(), true);
-        쿠폰_발급_실패_이벤트_수 = issuedCouponEventRepo.countByCouponIdAndIssued(coupon.getId(), false);
+    protected void 쿠폰_발급_시_발생한_이벤트_조회(Long couponId) {
+        쿠폰_소진_이벤트_수 = exhaustedCouponEventRepo.countByCouponId(couponId);
+        쿠폰_발급_성공_이벤트_수 = issuedCouponEventRepo.countByCouponIdAndIssued(couponId, true);
+        쿠폰_발급_실패_이벤트_수 = issuedCouponEventRepo.countByCouponIdAndIssued(couponId, false);
         전체_쿠폰_발급_이벤트_수 = 쿠폰_발급_성공_이벤트_수 + 쿠폰_발급_실패_이벤트_수;
     }
 }

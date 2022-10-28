@@ -8,7 +8,7 @@ import io.study.concurrency.core.coupon.domain.entity.Coupon;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Service:Coupon:Case#1:ConcurrentProblem")
+@DisplayName("Service:Coupon:Case#1:Concurrent Problem")
 public class CouponServiceConcurrentProblemTest extends AbstractSpringBootThreadTestBase {
     private final CouponService couponService;
 
@@ -26,7 +26,7 @@ public class CouponServiceConcurrentProblemTest extends AbstractSpringBootThread
         동시에_100개의_쿠폰_발급_요청(() -> couponService.issueCoupon(수량이_1개인_쿠폰.getId()));
 
         // Then
-        쿠폰_발급_시_발생한_이벤트_조회(수량이_1개인_쿠폰);
+        쿠폰_발급_시_발생한_이벤트_조회(수량이_1개인_쿠폰.getId());
         assertAll(
             () -> assertThat(쿠폰_소진_이벤트_수).as("100번의 쿠폰 발급 요청을 처리 하는 과정에서 발생한 동시성 문제로 인해 쿠폰이 1회 이상 소진").isNotEqualTo(1),
             () -> assertThat(쿠폰_발급_성공_이벤트_수).as("100번의 쿠폰 발급 요청을 처리하는 과정에서 발생한 동시성 문제로 인해 수량이 1개인 쿠폰이 1회 이상 발급").isNotEqualTo(1),
@@ -44,7 +44,7 @@ public class CouponServiceConcurrentProblemTest extends AbstractSpringBootThread
         동시에_100개의_쿠폰_발급_요청(() -> couponService.issueCoupon(수량이_100개인_쿠폰.getId()));
 
         // Then
-        쿠폰_발급_시_발생한_이벤트_조회(수량이_100개인_쿠폰);
+        쿠폰_발급_시_발생한_이벤트_조회(수량이_100개인_쿠폰.getId());
         assertAll(
             () -> assertThat(쿠폰_소진_이벤트_수).as("100번의 쿠폰 발급 요청을 처리하는 과정에서 발생한 동시성 문제로 인해 쿠폰 소진 이벤트 미 발생").isZero(),
             () -> assertThat(쿠폰_발급_성공_이벤트_수).as("100번의 쿠폰 발급 요청 모두 발급 성공").isEqualTo(AbstractSpringBootThreadTestBase.TRY_COUNT),
