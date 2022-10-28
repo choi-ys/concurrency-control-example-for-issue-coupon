@@ -1,0 +1,8 @@
+dependencies {
+    api project(':module-core')
+    testImplementation project(":module-core").sourceSets.test.output
+    testImplementation 'io.github.hakky54:consolecaptor:1.0.2'
+}
+
+bootJar { enabled(false) }
+jar { enabled(true) }

@@ -2,3 +2,5 @@ rootProject.name = 'concurreny'
 
 include 'module-core'
 include 'module-pessimistic'
+include 'module-optimistic'
+
