@@ -20,9 +20,9 @@ import org.springframework.test.context.TestConstructor.AutowireMode;
 @TestConstructor(autowireMode = AutowireMode.ALL)
 @Import({CouponFixtureGenerator.class, TearIsolationUtils.class})
 public abstract class AbstractSpringBootThreadTestBase {
-    public static final int THREAD_POOL_SIZE = 16;
+    public static final int THREAD_POOL_SIZE = Runtime.getRuntime().availableProcessors();
     public static final int TRY_COUNT = 100;
-    public static final int ASYNC_EVENT_SUBSCRIBER_WAIT_MILLISECOND = 300;
+    public static final int ASYNC_EVENT_SUBSCRIBER_WAIT_MILLISECOND = 1000;
     protected int 쿠폰_소진_이벤트_수, 쿠폰_발급_성공_이벤트_수, 쿠폰_발급_실패_이벤트_수, 전체_쿠폰_발급_이벤트_수;
 
     @Resource
