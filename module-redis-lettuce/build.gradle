@@ -1,0 +1,11 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    testImplementation 'org.testcontainers:junit-jupiter:1.17.5'
+
+    api project(':module-core')
+    testImplementation project(":module-core").sourceSets.test.output
+}
+
+bootJar { enabled(false) }
+jar { enabled(true) }

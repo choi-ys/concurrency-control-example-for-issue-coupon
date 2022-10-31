@@ -4,4 +4,5 @@ include 'module-common'
 include 'module-core'
 include 'module-pessimistic'
 include 'module-optimistic'
+include 'module-redis-lettuce'
 
