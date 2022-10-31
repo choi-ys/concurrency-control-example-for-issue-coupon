@@ -1,7 +1,7 @@
-package io.study.concurrency.core.config;
+package io.study.concurrency.common.coupon.config;
 
 import com.github.gavlyukovskiy.boot.jdbc.decorator.DataSourceDecoratorAutoConfiguration;
-import io.study.concurrency.core.coupon.config.P6spyLogMessageFormatConfiguration;
+import io.study.concurrency.common.coupon.config.p6spy.P6spyLogMessageFormatConfiguration;
 import java.util.function.Supplier;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;

@@ -1,4 +1,4 @@
-package io.study.concurrency.core.coupon.domain.entity;
+package io.study.concurrency.common.coupon.domain.entity;
 
 import static org.hibernate.type.IntegerType.ZERO;
 

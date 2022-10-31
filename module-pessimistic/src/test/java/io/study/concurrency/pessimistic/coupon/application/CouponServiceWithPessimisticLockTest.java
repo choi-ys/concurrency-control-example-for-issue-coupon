@@ -1,19 +1,19 @@
 package io.study.concurrency.pessimistic.coupon.application;
 
-import static io.study.concurrency.core.utils.fixture.CouponFixtureGenerator.HUNDRED;
+import static io.study.concurrency.common.coupon.constants.FixtureConstants.HUNDRED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import io.study.concurrency.core.config.AbstractSpringBootThreadTestBase;
 import io.study.concurrency.core.coupon.domain.entity.Coupon;
+import io.study.concurrency.core.utils.AbstractCouponConcurrencyTestBase;
 import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.orm.jpa.JpaSystemException;
 
 @DisplayName("Service:Coupon:Case#2:Pessimistic Lock")
-class CouponServiceWithPessimisticLockTest extends AbstractSpringBootThreadTestBase {
+class CouponServiceWithPessimisticLockTest extends AbstractCouponConcurrencyTestBase {
     private final CouponServiceWithPessimisticLock couponService;
 
     public CouponServiceWithPessimisticLockTest(CouponServiceWithPessimisticLock couponService) {

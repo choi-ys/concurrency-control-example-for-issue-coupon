@@ -1,6 +1,6 @@
 dependencies {
-    api project(':module-core')
-    testImplementation project(":module-core").sourceSets.test.output
+    api project(':module-common')
+    testImplementation project(":module-common").sourceSets.test.output
     testImplementation 'io.github.hakky54:consolecaptor:1.0.2'
 }
 

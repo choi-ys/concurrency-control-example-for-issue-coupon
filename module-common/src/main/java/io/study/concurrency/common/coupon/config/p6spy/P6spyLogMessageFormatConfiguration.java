@@ -1,4 +1,4 @@
-package io.study.concurrency.core.coupon.config;
+package io.study.concurrency.common.coupon.config.p6spy;
 
 import com.p6spy.engine.spy.P6SpyOptions;
 import javax.annotation.PostConstruct;

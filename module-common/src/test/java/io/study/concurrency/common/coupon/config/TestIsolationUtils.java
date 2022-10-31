@@ -1,4 +1,4 @@
-package io.study.concurrency.core.utils;
+package io.study.concurrency.common.coupon.config;
 
 import com.google.common.base.CaseFormat;
 import java.util.List;
@@ -11,11 +11,11 @@ import org.springframework.test.context.TestConstructor.AutowireMode;
 import org.springframework.transaction.annotation.Transactional;
 
 @TestConstructor(autowireMode = AutowireMode.ALL)
-public class TearIsolationUtils implements InitializingBean {
+public class TestIsolationUtils implements InitializingBean {
 
     private final EntityManager entityManager;
 
-    public TearIsolationUtils(EntityManager entityManager) {
+    public TestIsolationUtils(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

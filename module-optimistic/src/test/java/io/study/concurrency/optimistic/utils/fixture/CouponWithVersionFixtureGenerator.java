@@ -1,8 +1,8 @@
 package io.study.concurrency.optimistic.utils.fixture;
 
-import static io.study.concurrency.core.utils.fixture.CouponFixtureGenerator.HUNDRED;
-import static io.study.concurrency.core.utils.fixture.CouponFixtureGenerator.NAME;
-import static io.study.concurrency.core.utils.fixture.CouponFixtureGenerator.ONE;
+import static io.study.concurrency.common.coupon.constants.FixtureConstants.HUNDRED;
+import static io.study.concurrency.common.coupon.constants.FixtureConstants.NAME;
+import static io.study.concurrency.common.coupon.constants.FixtureConstants.ONE;
 
 import io.study.concurrency.optimistic.coupon.domain.entity.CouponWithVersion;
 import io.study.concurrency.optimistic.coupon.infrastrucutre.CouponRepoWithOptimisticLock;

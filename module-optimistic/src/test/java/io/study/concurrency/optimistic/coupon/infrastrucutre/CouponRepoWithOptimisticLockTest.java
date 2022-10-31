@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import io.study.concurrency.core.config.AbstractDataJpaTestBase;
+import io.study.concurrency.common.coupon.config.AbstractDataJpaTestBase;
 import io.study.concurrency.optimistic.coupon.domain.entity.CouponWithVersion;
 import io.study.concurrency.optimistic.utils.fixture.CouponWithVersionFixtureGenerator;
 import java.util.Optional;
@@ -113,7 +113,7 @@ class CouponRepoWithOptimisticLockTest extends AbstractDataJpaTestBase {
 
     @Test
     @DisplayName("낙관락 충돌 예외 발생 시, ObjectOptimisticLockingFailureException에서 제공하는 Entity 식별자 정보를 이용한 재시도")
-    public void retry_When() {
+    public void retry_WhenOccurObjectOptimisticLockingFailureException() {
         // Given
         CouponWithVersion 저장된_수량이_100개인_쿠폰 = executeWithPersistContextClear(couponWithVersionFixtureGenerator::수량이_100개인_쿠폰_저장);
         쿠폰_발급(저장된_수량이_100개인_쿠폰.getId());

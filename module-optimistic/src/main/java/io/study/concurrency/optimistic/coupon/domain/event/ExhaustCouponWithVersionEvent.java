@@ -1,7 +1,7 @@
 package io.study.concurrency.optimistic.coupon.domain.event;
 
-import io.study.concurrency.core.coupon.domain.event.common.CouponEventAttributes;
-import io.study.concurrency.core.coupon.domain.event.common.DomainEvent;
+import io.study.concurrency.common.coupon.domain.event.CouponEventAttributes;
+import io.study.concurrency.common.coupon.domain.event.DomainEvent;
 import io.study.concurrency.optimistic.coupon.domain.entity.CouponWithVersion;
 import java.time.LocalDateTime;
 import javax.persistence.Embedded;

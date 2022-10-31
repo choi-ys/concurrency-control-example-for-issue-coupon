@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CouponServiceWithOptimisticLock {
-    private static final int ONE_SECONDS = 1000;
+    private static final int BLOCKING_MILLISECOND = 3000;
     private static final String COUPON_NOT_FOUND_ERROR_MESSAGE = "요청에 해당하는 쿠폰을 찾을 수 없습니다.";
     private final CouponRepoWithOptimisticLock couponRepo;
 
@@ -24,7 +24,7 @@ public class CouponServiceWithOptimisticLock {
     public void issueCouponWithSleep(Long id) {
         CouponWithVersion queriedCoupon = findById(id);
         queriedCoupon.issue();
-        delay(ONE_SECONDS);
+        delay(BLOCKING_MILLISECOND);
     }
 
     private void delay(int mills) {

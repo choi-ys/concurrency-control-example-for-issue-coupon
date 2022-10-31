@@ -1,5 +1,8 @@
 package io.study.concurrency.core.utils.fixture;
 
+import static io.study.concurrency.common.coupon.constants.FixtureConstants.HUNDRED;
+import static io.study.concurrency.common.coupon.constants.FixtureConstants.NAME;
+import static io.study.concurrency.common.coupon.constants.FixtureConstants.ONE;
 import static org.hibernate.type.IntegerType.ZERO;
 
 import io.study.concurrency.core.coupon.domain.entity.Coupon;
@@ -11,10 +14,6 @@ import org.springframework.test.context.TestConstructor.AutowireMode;
 @TestComponent
 @TestConstructor(autowireMode = AutowireMode.ALL)
 public class CouponFixtureGenerator {
-    public static final String NAME = "천원 할인 쿠폰";
-    public static final int HUNDRED = 100;
-    public static final int ONE = 1;
-
     private final CouponRepo couponRepo;
 
     public CouponFixtureGenerator(CouponRepo couponRepo) {

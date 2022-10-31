@@ -2,7 +2,7 @@ package io.study.concurrency.optimistic.coupon.application;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import io.study.concurrency.core.config.AbstractSpringBootThreadTestBase;
+import io.study.concurrency.common.coupon.config.AbstractConcurrencyTestBase;
 import io.study.concurrency.optimistic.coupon.domain.entity.CouponWithVersion;
 import io.study.concurrency.optimistic.utils.fixture.CouponWithVersionFixtureGenerator;
 import java.util.concurrent.CompletableFuture;
@@ -13,7 +13,7 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
 @DisplayName("Service:Coupon:Case#2:Optimistic Lock")
 @Import(CouponWithVersionFixtureGenerator.class)
-class CouponServiceWithOptimisticLockTest extends AbstractSpringBootThreadTestBase {
+class CouponServiceWithOptimisticLockTest extends AbstractConcurrencyTestBase {
     private final CouponServiceWithOptimisticLock couponService;
     private final CouponWithVersionFixtureGenerator couponWithVersionFixtureGenerator;
 

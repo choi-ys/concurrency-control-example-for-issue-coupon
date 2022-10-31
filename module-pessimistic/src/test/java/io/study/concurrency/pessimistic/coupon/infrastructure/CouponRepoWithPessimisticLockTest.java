@@ -3,7 +3,7 @@ package io.study.concurrency.pessimistic.coupon.infrastructure;
 import static io.study.concurrency.core.utils.fixture.CouponFixtureGenerator.수량이_100개인_쿠폰_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.study.concurrency.core.config.AbstractDataJpaTestBase;
+import io.study.concurrency.common.coupon.config.AbstractDataJpaTestBase;
 import io.study.concurrency.core.coupon.domain.entity.Coupon;
 import java.util.Optional;
 import nl.altindag.console.ConsoleCaptor;

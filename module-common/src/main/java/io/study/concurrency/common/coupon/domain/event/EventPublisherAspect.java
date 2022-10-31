@@ -1,4 +1,4 @@
-package io.study.concurrency.core.coupon.domain.event.common;
+package io.study.concurrency.common.coupon.domain.event;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

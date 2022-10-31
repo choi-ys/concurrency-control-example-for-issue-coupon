@@ -1,10 +1,11 @@
 package io.study.concurrency.optimistic.coupon.domain.entity;
 
-import static io.study.concurrency.core.coupon.domain.event.common.DomainEventPublisher.registerEvent;
 
-import io.study.concurrency.core.coupon.domain.entity.BaseEntity;
-import io.study.concurrency.core.coupon.domain.entity.Issuable;
-import io.study.concurrency.core.coupon.domain.entity.Quantity;
+import static io.study.concurrency.common.coupon.domain.event.DomainEventPublisher.registerEvent;
+
+import io.study.concurrency.common.coupon.domain.entity.BaseEntity;
+import io.study.concurrency.common.coupon.domain.entity.Issuable;
+import io.study.concurrency.common.coupon.domain.entity.Quantity;
 import io.study.concurrency.optimistic.coupon.domain.event.ExhaustCouponWithVersionEvent;
 import io.study.concurrency.optimistic.coupon.domain.event.IssuedCouponWithVersionEvent;
 import java.util.Objects;

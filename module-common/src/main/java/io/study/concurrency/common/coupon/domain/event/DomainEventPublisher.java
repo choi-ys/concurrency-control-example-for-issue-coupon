@@ -1,4 +1,4 @@
-package io.study.concurrency.core.coupon.domain.event.common;
+package io.study.concurrency.common.coupon.domain.event;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.util.ObjectUtils;

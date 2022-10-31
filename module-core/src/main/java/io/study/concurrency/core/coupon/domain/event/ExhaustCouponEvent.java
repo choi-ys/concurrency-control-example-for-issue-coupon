@@ -1,8 +1,8 @@
 package io.study.concurrency.core.coupon.domain.event;
 
+import io.study.concurrency.common.coupon.domain.event.CouponEventAttributes;
+import io.study.concurrency.common.coupon.domain.event.DomainEvent;
 import io.study.concurrency.core.coupon.domain.entity.Coupon;
-import io.study.concurrency.core.coupon.domain.event.common.CouponEventAttributes;
-import io.study.concurrency.core.coupon.domain.event.common.DomainEvent;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

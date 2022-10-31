@@ -1,6 +1,6 @@
 package io.study.concurrency.core.coupon.domain.entity;
 
-import static io.study.concurrency.core.utils.fixture.CouponFixtureGenerator.NAME;
+import static io.study.concurrency.common.coupon.constants.FixtureConstants.NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.hibernate.type.IntegerType.ZERO;
