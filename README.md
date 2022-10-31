@@ -23,15 +23,13 @@
 |Log|p6spy|
 
 # TODO
-* [ ] 쿠폰 Entity 설계 및 JPA Repository 생성
-* [ ] 쿠폰 재고 감소 로직 구현
-* [ ] 쿠폰 발급/소진 이벤트 발행
-* [ ] 쿠폰 재고 소진 시 사용 가능 상태 변경 event 구현 
-* [ ] 동시에 여러 쓰레드가 단일 쿠폰을 발급 받는 경우, 발생하는 동시성 문제 발생 TC 작성
-* [ ] 동시에 여러 쓰레드가 단일 쿠폰을 발급 받는 경우, Java synchronized를 이용한 동시성 제어 TC 작성
-* [ ] 동시에 여러 쓰레드가 단일 쿠폰을 발급 받는 경우, JPA Pessimistic Lock을 이용한 동시성 제어 TC 작성
-* [ ] 동시에 여러 쓰레드가 단일 쿠폰을 발급 받는 경우, JPA Optimistic Lock을 이용한 동시성 제어 TC 작성
-* [ ] 동시에 여러 쓰레드가 단일 쿠폰을 발급 받는 경우, Redis Lettuce의 Spin Lock을 이용한 동시성 제어 TC 작성
-* [ ] 동시에 여러 쓰레드가 단일 쿠폰을 발급 받는 경우, Redis Redisson을 이용한 동시성 제어 TC 작성
+* [x] 쿠폰 Entity 설계 및 JPA Repository 생성
+* [x] 쿠폰 재고 감소 로직 구현
+* [x] 쿠폰 발급/소진 이벤트 발행 
+* [x] 동시에 여러 쓰레드가 단일 쿠폰을 발급 받는 경우, 발생하는 동시성 문제 발생 TC 작성
+* [x] 동시에 여러 쓰레드가 단일 쿠폰을 발급 받는 경우, JPA Pessimistic Lock을 이용한 동시성 제어 TC 작성
+* [x] 동시에 여러 쓰레드가 단일 쿠폰을 발급 받는 경우, JPA Optimistic Lock을 이용한 동시성 제어 TC 작성
+* [x] 동시에 여러 쓰레드가 단일 쿠폰을 발급 받는 경우, Redis Lettuce의 Spin Lock을 이용한 동시성 제어 TC 작성
+* [x] 동시에 여러 쓰레드가 단일 쿠폰을 발급 받는 경우, Redis Redisson을 이용한 동시성 제어 TC 작성
 
 ---
