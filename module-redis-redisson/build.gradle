@@ -1,0 +1,9 @@
+dependencies {
+    implementation 'org.redisson:redisson-spring-boot-starter:3.17.7'
+
+    api project(':module-redis-common')
+    testImplementation project(":module-redis-common").sourceSets.test.output
+}
+
+bootJar { enabled(false) }
+jar { enabled(true) }
