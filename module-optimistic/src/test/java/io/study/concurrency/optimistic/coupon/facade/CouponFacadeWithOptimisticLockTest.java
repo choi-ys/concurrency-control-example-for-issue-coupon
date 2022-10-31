@@ -20,7 +20,7 @@ class CouponFacadeWithOptimisticLockTest extends AbstractCouponWithVersionConcur
     }
 
     @Test
-    @DisplayName("`JPA 낙관락`을 통해 `100명의 사용자`가 `수량이 1개인 쿠폰`을 `동시에 발급`하는 경우 발생하는 동시성 문제 해결")
+    @DisplayName("JPA 낙관락을 통해 100명의 사용자가 수량이 1개인 쿠폰을 동시에 발급하는 경우 발생하는 동시성 문제 해결")
     public void concurrentControlWithJpaOptimisticLock_WhenCouponWithOneQuantityIsRequested100TimesAtTheSameTime() throws InterruptedException {
         // Given
         CouponWithVersion 수량이_1개인_쿠폰 = couponWithVersionFixtureGenerator.수량이_1개인_쿠폰_저장();
@@ -46,7 +46,7 @@ class CouponFacadeWithOptimisticLockTest extends AbstractCouponWithVersionConcur
     }
 
     @Test
-    @DisplayName("`JPA 낙관락`을 통해 `100명의 사용자`가 수량이 100개인 쿠폰을 동시에 발급하는 경우 발생하는 동시성 문제 해결")
+    @DisplayName("JPA 낙관락을 통해 100명의 사용자가 수량이 100개인 쿠폰을 동시에 발급하는 경우 발생하는 동시성 문제 해결")
     public void concurrentControlWithJpaOptimisticLock_WhenCouponWithHundredQuantityIsRequested100TimesAtTheSameTime() throws InterruptedException {
         // Given
         CouponWithVersion 수량이_100개인_쿠폰 = couponWithVersionFixtureGenerator.수량이_100개인_쿠폰_저장();

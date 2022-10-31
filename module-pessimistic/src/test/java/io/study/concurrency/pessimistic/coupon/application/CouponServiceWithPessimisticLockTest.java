@@ -12,7 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.orm.jpa.JpaSystemException;
 
-@DisplayName("Service:Coupon:Case#2:Pessimistic Lock")
+@DisplayName("Service:Coupon:Case#3:Pessimistic Lock")
 class CouponServiceWithPessimisticLockTest extends AbstractCouponConcurrencyTestBase {
     private final CouponServiceWithPessimisticLock couponService;
 
@@ -35,7 +35,7 @@ class CouponServiceWithPessimisticLockTest extends AbstractCouponConcurrencyTest
     }
 
     @Test
-    @DisplayName("`JPA 비관락`을 통해 `100명의 사용자`가 `수량이 1개인 쿠폰`을 `동시에 발급`하는 경우 발생하는 `동시성 문제 해결`")
+    @DisplayName("JPA 비관락을 통해 100명의 사용자가 수량이 1개인 쿠폰을 동시에 발급하는 경우 발생하는 동시성 문제 해결")
     public void concurrentControlWithJpaPessimisticLock_WhenCouponWithOneQuantityIsRequested100TimesAtTheSameTime() throws InterruptedException {
         // Given
         Coupon 수량이_1개인_쿠폰 = couponFixtureGenerator.수량이_1개인_쿠폰_저장();
@@ -65,7 +65,7 @@ class CouponServiceWithPessimisticLockTest extends AbstractCouponConcurrencyTest
     }
 
     @Test
-    @DisplayName("`JPA 비관락`을 통해 `100명의 사용자`가 `수량이 100개인 쿠폰`을 `동시에 발급`하는 경우 발생하는 `동시성 문제 해결`")
+    @DisplayName("JPA 비관락을 통해 100명의 사용자가 수량이 100개인 쿠폰을 동시에 발급하는 경우 발생하는 동시성 문제 해결")
     public void concurrentControlWithJpaPessimisticLock_WhenCouponWithHundredQuantityIsRequested100TimesAtTheSameTime() throws InterruptedException {
         // Given
         final Coupon 수량이_100개인_쿠폰 = couponFixtureGenerator.수량이_100개인_쿠폰_저장();

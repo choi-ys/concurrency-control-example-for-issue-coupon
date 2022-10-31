@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Import;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
-@DisplayName("Service:Coupon:Case#2:Optimistic Lock")
+@DisplayName("Service:Coupon:Optimistic Lock")
 @Import(CouponWithVersionFixtureGenerator.class)
 class CouponServiceWithOptimisticLockTest extends AbstractConcurrencyTestBase {
     private final CouponServiceWithOptimisticLock couponService;

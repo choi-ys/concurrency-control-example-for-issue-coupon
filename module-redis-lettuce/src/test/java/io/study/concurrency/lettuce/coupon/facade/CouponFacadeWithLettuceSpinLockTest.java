@@ -19,7 +19,7 @@ class CouponFacadeWithLettuceSpinLockTest extends AbstractRedisContainerTestBase
     }
 
     @Test
-    @DisplayName("`Lettuce`를 이용한 spin lock을 통해 `100명의 사용자`가 수량이 1개인 쿠폰을 동시에 발급하는 경우 발생하는 동시성 문제 해결")
+    @DisplayName("Lettuce를 이용한 spin lock을 통해 100명의 사용자가 수량이 1개인 쿠폰을 동시에 발급하는 경우 발생하는 동시성 문제 해결")
     public void concurrentControlWithLettuceSpinLock_WhenCouponWithOneQuantityIsRequested100TimesAtTheSameTime() throws InterruptedException {
         // Given
         Coupon 수량이_1개인_쿠폰 = couponFixtureGenerator.수량이_1개인_쿠폰_저장();
@@ -47,7 +47,7 @@ class CouponFacadeWithLettuceSpinLockTest extends AbstractRedisContainerTestBase
     }
 
     @Test
-    @DisplayName("`Lettuce`를 이용한 spin lock을 통해 `100명의 사용자`가 수량이 100개인 쿠폰을 동시에 발급하는 경우 발생하는 동시성 문제 해결")
+    @DisplayName("Lettuce를 이용한 spin lock을 통해 100명의 사용자가 수량이 100개인 쿠폰을 동시에 발급하는 경우 발생하는 동시성 문제 해결")
     public void concurrentControlWithLettuceSpinLock_WhenCouponWithHundredQuantityIsRequested100TimesAtTheSameTime() throws InterruptedException {
         // Given
         Coupon 수량이_100개인_쿠폰_저장 = couponFixtureGenerator.수량이_100개인_쿠폰_저장();
