@@ -50,15 +50,15 @@ class CouponServiceWithPessimisticLockTest extends AbstractCouponConcurrencyTest
 
     private void 동시에_수량이_1개인_쿠폰_발급시_발생한_동시성_문제_해결_검증() {
         assertAll(
-            () -> assertThat(쿠폰_소진_이벤트_수)
+            () -> assertThat(쿠폰_소진_이벤트_발생_횟수)
                 .as("적용 : 동시에 실행되는 트랜잭션의 실행 순서를 제어하기 위한 JPA의 비관락 적용")
                 .as("결과 : 100명의 사용자가 수량이 1개인 쿠폰을 동시에 발급 하는 경우, 실행 순서가 제어되어 한번만 발생한 쿠폰 소진 이벤트")
                 .isEqualTo(1),
-            () -> assertThat(쿠폰_발급_성공_이벤트_수)
+            () -> assertThat(쿠폰_발급_성공_이벤트_발생_횟수)
                 .as("적용 : 동시에 실행되는 트랜잭션의 실행 순서를 제어하기 위한 JPA의 비관락 적용")
                 .as("결과 : 100명의 사용자가 수량이 1개인 쿠폰을 동시에 발급 하는 경우, 실행 순서가 제어 되어 한번만 발생한 쿠폰 발급 이벤트")
                 .isEqualTo(1),
-            () -> assertThat(전체_쿠폰_발급_이벤트_수)
+            () -> assertThat(전체_쿠폰_발급_이벤트_발생_횟수)
                 .as("전체 쿠폰 발급 요청 이벤트 수")
                 .isEqualTo(HUNDRED)
         );
@@ -80,15 +80,15 @@ class CouponServiceWithPessimisticLockTest extends AbstractCouponConcurrencyTest
 
     private void 동시에_수량이_100개인_쿠폰_발급시_발생한_동시성_문제_해결_검증(Coupon coupon) {
         assertAll(
-            () -> assertThat(쿠폰_소진_이벤트_수)
+            () -> assertThat(쿠폰_소진_이벤트_발생_횟수)
                 .as("적용 : 동시에 실행되는 트랜잭션의 실행 순서를 제어하기 위한 JPA의 비관락 적용")
                 .as("결과 : 100명의 사용자가 수량이 100개인 쿠폰을 동시에 발급 하는 경우, 실행 순서가 제어되어 한번만 발생한 쿠폰 소진 이벤트")
                 .isEqualTo(1),
-            () -> assertThat(쿠폰_발급_성공_이벤트_수)
+            () -> assertThat(쿠폰_발급_성공_이벤트_발생_횟수)
                 .as("적용 : 동시에 실행되는 트랜잭션의 실행 순서를 제어하기 위한 JPA의 비관락 적용")
                 .as("결과 : 100명의 사용자가 수량이 100개인 쿠폰을 동시에 발급 하는 경우, 실행 순서가 제어 되어 쿠폰 수량 만큼 발생한 쿠폰 발급 이벤트")
                 .isEqualTo(coupon.getQuantity()),
-            () -> assertThat(전체_쿠폰_발급_이벤트_수)
+            () -> assertThat(전체_쿠폰_발급_이벤트_발생_횟수)
                 .as("전체 쿠폰 발급 요청 이벤트 수")
                 .isEqualTo(HUNDRED)
         );

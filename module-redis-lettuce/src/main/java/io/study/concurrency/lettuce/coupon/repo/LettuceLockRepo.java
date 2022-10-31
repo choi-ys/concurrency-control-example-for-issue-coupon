@@ -1,6 +1,6 @@
 package io.study.concurrency.lettuce.coupon.repo;
 
-import static io.study.concurrency.lettuce.coupon.utils.KeyGenerator.generateCouponLockKey;
+import static io.study.concurrency.common.redis.utils.KeyGenerator.generateCouponLockKey;
 
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;

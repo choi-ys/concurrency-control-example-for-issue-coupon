@@ -2,15 +2,13 @@ package io.study.concurrency.lettuce.coupon.repo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.study.concurrency.lettuce.coupon.config.AbstractRedisContainerTestBase;
+import io.study.concurrency.common.redis.config.AbstractRedisContainerTestBase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("redis-local")
-@DisplayName("Repo:Redis:Lettuce")
+@DisplayName("Repo:Coupon:Lettuce Lock")
 class LettuceLockRepoTest extends AbstractRedisContainerTestBase {
     private final Long key = 1L;
     private final LettuceLockRepo lettuceLockRepo;

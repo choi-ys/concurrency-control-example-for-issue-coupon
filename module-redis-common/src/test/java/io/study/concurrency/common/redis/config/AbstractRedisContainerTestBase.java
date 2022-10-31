@@ -1,4 +1,4 @@
-package io.study.concurrency.lettuce.coupon.config;
+package io.study.concurrency.common.redis.config;
 
 import io.study.concurrency.core.utils.AbstractCouponConcurrencyTestBase;
 import org.springframework.boot.test.context.SpringBootTest;

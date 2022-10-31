@@ -1,4 +1,4 @@
-package io.study.concurrency.lettuce.coupon.utils;
+package io.study.concurrency.common.redis.utils;
 
 public class KeyGenerator {
     private static final String STOCK_LOCK_KEY_FORMAT = "coupon:%s";

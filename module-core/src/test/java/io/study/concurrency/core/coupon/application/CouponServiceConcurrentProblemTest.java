@@ -28,9 +28,9 @@ public class CouponServiceConcurrentProblemTest extends AbstractCouponConcurrenc
         // Then
         쿠폰_발급_시_발생한_이벤트_조회(수량이_1개인_쿠폰.getId());
         assertAll(
-            () -> assertThat(쿠폰_소진_이벤트_수).as("100번의 쿠폰 발급 요청을 처리 하는 과정에서 발생한 동시성 문제로 인해 쿠폰이 1회 이상 소진").isNotEqualTo(1),
-            () -> assertThat(쿠폰_발급_성공_이벤트_수).as("100번의 쿠폰 발급 요청을 처리하는 과정에서 발생한 동시성 문제로 인해 수량이 1개인 쿠폰이 1회 이상 발급").isNotEqualTo(1),
-            () -> assertThat(전체_쿠폰_발급_이벤트_수).as("전체 쿠폰 발급 이벤트 수").isEqualTo(AbstractCouponConcurrencyTestBase.TRY_COUNT)
+            () -> assertThat(쿠폰_소진_이벤트_발생_횟수).as("100번의 쿠폰 발급 요청을 처리 하는 과정에서 발생한 동시성 문제로 인해 쿠폰이 1회 이상 소진").isNotEqualTo(1),
+            () -> assertThat(쿠폰_발급_성공_이벤트_발생_횟수).as("100번의 쿠폰 발급 요청을 처리하는 과정에서 발생한 동시성 문제로 인해 수량이 1개인 쿠폰이 1회 이상 발급").isNotEqualTo(1),
+            () -> assertThat(전체_쿠폰_발급_이벤트_발생_횟수).as("전체 쿠폰 발급 이벤트 수").isEqualTo(AbstractCouponConcurrencyTestBase.TRY_COUNT)
         );
     }
 
@@ -46,9 +46,9 @@ public class CouponServiceConcurrentProblemTest extends AbstractCouponConcurrenc
         // Then
         쿠폰_발급_시_발생한_이벤트_조회(수량이_100개인_쿠폰.getId());
         assertAll(
-            () -> assertThat(쿠폰_소진_이벤트_수).as("100번의 쿠폰 발급 요청을 처리하는 과정에서 발생한 동시성 문제로 인해 쿠폰 소진 이벤트 미 발생").isZero(),
-            () -> assertThat(쿠폰_발급_성공_이벤트_수).as("100번의 쿠폰 발급 요청 모두 발급 성공").isEqualTo(AbstractCouponConcurrencyTestBase.TRY_COUNT),
-            () -> assertThat(전체_쿠폰_발급_이벤트_수).as("전체 쿠폰 발급 이벤트 수").isEqualTo(AbstractCouponConcurrencyTestBase.TRY_COUNT)
+            () -> assertThat(쿠폰_소진_이벤트_발생_횟수).as("100번의 쿠폰 발급 요청을 처리하는 과정에서 발생한 동시성 문제로 인해 쿠폰 소진 이벤트 미 발생").isZero(),
+            () -> assertThat(쿠폰_발급_성공_이벤트_발생_횟수).as("100번의 쿠폰 발급 요청 모두 발급 성공").isEqualTo(AbstractCouponConcurrencyTestBase.TRY_COUNT),
+            () -> assertThat(전체_쿠폰_발급_이벤트_발생_횟수).as("전체 쿠폰 발급 이벤트 수").isEqualTo(AbstractCouponConcurrencyTestBase.TRY_COUNT)
         );
     }
 }

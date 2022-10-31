@@ -2,7 +2,9 @@ rootProject.name = 'concurreny'
 
 include 'module-common'
 include 'module-core'
-include 'module-pessimistic'
-include 'module-optimistic'
+include 'module-jpa-pessimistic'
+include 'module-jpa-optimistic'
 include 'module-redis-lettuce'
+include 'module-redis-redisson'
+include 'module-redis-common'
 
