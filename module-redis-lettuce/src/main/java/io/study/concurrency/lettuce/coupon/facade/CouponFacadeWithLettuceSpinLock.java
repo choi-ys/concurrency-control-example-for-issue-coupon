@@ -12,7 +12,7 @@ public class CouponFacadeWithLettuceSpinLock {
     private final CouponService couponService;
     private final LettuceLockRepo lettuceLockRepo;
 
-    public void issueCouponWithSpinLock(Long id) {
+    public void issueCoupon(Long id) {
         getLock(id);
 
         try {

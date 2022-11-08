@@ -11,15 +11,15 @@ public class CouponFacadeWithOptimisticLock {
     public static final int RETRY_INTERVAL_MILLISECOND = 10;
     private final CouponServiceWithOptimisticLock couponService;
 
-    public void issue(Long id) {
+    public void issueCoupon(Long id) {
         while (true) {
-            if (issueWithRetry(id)) {
+            if (executeWithRetry(id)) {
                 break;
             }
         }
     }
 
-    private boolean issueWithRetry(Long id) {
+    private boolean executeWithRetry(Long id) {
         try {
             couponService.issueCoupon(id);
             return true;

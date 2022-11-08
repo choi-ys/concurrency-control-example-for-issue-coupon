@@ -15,7 +15,7 @@ public class CouponFacadeWithRedissonLock {
     private final CouponService couponService;
     private final RedissonClient redissonClient;
 
-    public void issueCouponWithRedissonLock(Long id) {
+    public void issueCoupon(Long id) {
         String couponLockKey = generateCouponLockKey(id);
         RLock lock = redissonClient.getLock(couponLockKey);
         try {
