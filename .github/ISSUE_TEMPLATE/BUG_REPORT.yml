@@ -18,6 +18,18 @@ body:
       placeholder: ex. email@example.com
     validations:
       required: false
+
+  - type: checkboxes
+    id: cat-preferences
+    attributes:
+      label: What kinds of cats do you like?
+      description: You may select more than one.
+      options:
+        - label: Orange cat (required. Everyone likes orange cats.)
+          required: true
+        - label: **Black cat**
+        - label: **Black cat2**
+        - label: **Black cat3**
   - type: textarea
     id: what-happened
     attributes:
