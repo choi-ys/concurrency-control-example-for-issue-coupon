@@ -18,7 +18,6 @@ body:
       placeholder: ex. email@example.com
     validations:
       required: false
-
   - type: checkboxes
     id: cat-preferences
     attributes:
@@ -28,8 +27,6 @@ body:
         - label: Orange cat (required. Everyone likes orange cats.)
           required: true
         - label: **Black cat**
-        - label: **Black cat2**
-        - label: **Black cat3**
   - type: textarea
     id: what-happened
     attributes:
