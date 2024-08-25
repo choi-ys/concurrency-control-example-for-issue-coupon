@@ -24,7 +24,9 @@ body:
       label: What kinds of cats do you like?
       description: You may select more than one.
       options:
-        - label: Orange cat (required. Everyone likes orange cats.)
+        - label: Orange cat 1
+        - label: Orange cat 2
+        - label: Orange cat 3
   - type: textarea
     id: what-happened
     attributes:
